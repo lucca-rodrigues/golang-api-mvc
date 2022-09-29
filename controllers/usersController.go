@@ -51,9 +51,9 @@ func Create(c *gin.Context){
 func Update(c *gin.Context){
 	db := database.GetDatabase()
 
-	var p models.User
+	var user models.User
 
-	err := c.ShouldBindJSON(&p)
+	err := c.ShouldBindJSON(&user)
 	if err != nil {
 		c.JSON(400, gin.H{
 			"error": "cannot bind JSON: " + err.Error(),
@@ -61,7 +61,7 @@ func Update(c *gin.Context){
 		return
 	}
 
-	err = db.Save(&p).Error
+	err = db.Save(&user).Error
 	if err != nil {
 		c.JSON(400, gin.H{
 			"error": "cannot update book: " + err.Error(),
