@@ -1,3 +1,7 @@
+# Banco de dados:
+
+- Para este projeto estamos utilizando um banco de dados postgresql, e para facilitar a criação e configuração é só rodar `docker-compose up` e o banco será criado na sua máquina local.
+
 # Executar o projeto:
 
 - Para executar projetos em Go, é necessário ter o pacote do `GO` instalado no seu ambiente.
@@ -9,3 +13,8 @@
 
 - Se você possui o insomnia instalado, faça a importação da collection dentro de `doc/insomnia_collection.json`.
   <img src="./doc/insomnia_evidence.png" alt="Evidência do Insomnia sendo executado"/>
+
+<!-- ## Executar com Docker
+
+- Para gerar uma imagem docker local, rodar `docker build -t api-mvc .`
+- Para executar a imagem docker `docker run --rm -it api-mvc` -->
