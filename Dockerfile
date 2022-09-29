@@ -11,8 +11,9 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -o ./out/api-mvc .
+# RUN go build -o ./out/api-mvc .
 
 EXPOSE 3333
 
-CMD ["./out/api-mvc"]
+# CMD ["./out/api-mvc"]
+CMD ["go", "run", "main.go"]

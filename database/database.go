@@ -27,7 +27,10 @@ func StartDB(){
 	config.SetMaxIdleConns(10)
 	config.SetMaxOpenConns(100)
 	config.SetConnMaxLifetime(time.Hour)
+	config.SetMaxIdleConns(64)
 
+	config.SetMaxOpenConns(64)
+	config.SetConnMaxLifetime(time.Minute)
 	migrations.RunMigrations(db)
 }
 

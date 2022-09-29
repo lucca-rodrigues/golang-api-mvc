@@ -4,13 +4,31 @@ services:
   db:
     image: postgres:14.2-alpine
     restart: always
-    container_name: api-golang-mvc
+    container_name: api-golang-db
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: api-golang
       POSTGRES_DB: api-golang
     ports:
       - "5432:5432"
-
+    tty: true
     volumes:
       - ./database/data:/var/lib/postgresql/data
+    networks:
+      - api-network
+
+  # app:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "3333:3333"
+  #   restart: unless-stopped
+  #   tty: true
+  #   depends_on:
+  #     - db
+  #   networks:
+  #     - api-network
+
+networks:
+  api-network:
