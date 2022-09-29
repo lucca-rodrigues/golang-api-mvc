@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 	"github.com/luccarodrigues/golang-api-mvc/database"
 	"github.com/luccarodrigues/golang-api-mvc/models"
@@ -44,5 +46,51 @@ func Create(c *gin.Context){
 	}
 
 	c.JSON(200, user)
+}
 
+func Update(c *gin.Context){
+	db := database.GetDatabase()
+	var user models.User
+
+	err := c.ShouldBindJSON(&user)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": "cannot bind JSON: " + err.Error(),
+		})
+		return
+	}
+
+	err = db.Save(&user).Error
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": "cannot create book: " + err.Error(),
+		})
+		return
+	}
+
+	c.JSON(200, user)
+}
+
+func Delete(c *gin.Context){
+	id := c.Param("id")
+	newid, err := strconv.Atoi(id)
+
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": "ID has to be integer",
+		})
+		return
+	}
+
+	db := database.GetDatabase()
+
+	err = db.Delete(&models.User{}, newid).Error
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": "cannot delete book: " + err.Error(),
+		})
+		return
+	}
+
+	c.Status(204)
 }

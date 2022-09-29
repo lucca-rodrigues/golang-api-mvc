@@ -12,6 +12,8 @@ func ConfigRoutes(router *gin.Engine) *gin.Engine {
 		{
 			users.GET("/", controllers.GetAll)
 			users.POST("/", controllers.Create)
+			users.PUT("/:id", controllers.Update)
+			users.DELETE("/:id", controllers.Delete)
 		}
 	}
 	return router
