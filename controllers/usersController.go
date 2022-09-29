@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -49,27 +50,19 @@ func Create(c *gin.Context){
 }
 
 func Update(c *gin.Context){
+	id := c.Params.ByName("id")
 	db := database.GetDatabase()
 
 	var user models.User
 
-	err := c.ShouldBindJSON(&user)
-	if err != nil {
-		c.JSON(400, gin.H{
-			"error": "cannot bind JSON: " + err.Error(),
-		})
-		return
+	if err := db.Where("id = ?", id).First(&user).Error; err != nil {
+    c.AbortWithStatus(404)
+    fmt.Println(err)
 	}
+	c.BindJSON(&user)
 
-	err = db.Save(&user).Error
-	if err != nil {
-		c.JSON(400, gin.H{
-			"error": "cannot update book: " + err.Error(),
-		})
-		return
-	}
-
-	c.JSON(200, p)
+	db.Save(&user)
+	c.JSON(200, user)
 }
 
 func Delete(c *gin.Context){
