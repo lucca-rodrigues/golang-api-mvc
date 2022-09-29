@@ -12,7 +12,7 @@ import (
 
 var db *gorm.DB
 
-func startDB(){
+func StartDB(){
 	connection := "host=localhost port=5432 user=admin dbname=api-golang sslmode=disable password=api-golang"
 
 	database, err := gorm.Open(postgres.Open(connection), &gorm.Config{})
